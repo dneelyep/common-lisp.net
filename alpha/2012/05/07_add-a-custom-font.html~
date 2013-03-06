@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>
+     Add a custom font
+    </title>
+    <link rel="stylesheet" type="text/less" href="../../../style/bootstrap/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="generator" content="o-blog version 1.2-121-g4481fd3"/>
+    
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+
+      <div class="navbar-inner">
+      <div class="container">
+	<a class="brand" 
+	   href="../../../index.html">
+	 Common Lisp.net : Alpha
+        </a>
+	Lisp error in nil: (void-function drewc.org:replace-<i>-icons)
+	
+      </div>
+      </div>
+    </div>
+    <div class="subnav subnav-fixed visible-desktop">
+      <div class="container">
+       <ul class="breadcrumb">
+  <li><a href="../../../index.html">Home</a> <span class="divider">/</span></li>
+  <li><a href="../../../alpha/index.html">Alpha</a> <span class="divider">/</span></li><li><a href="../../../alpha/2012/index.html">2012</a> <span class="divider">/</span></li><li><a href="../../../alpha/2012/05/index.html">05</a> <span class="divider">/</span></li><li>Add a custom font</li>
+  </ul>
+
+      </div>
+    </div>
+    <div id="page" class="container">
+
+  <header class="article-header">
+
+    <div class="well">
+      <div class="row">
+	<div class="date span1">
+	  <div class=" date-d">07</div>
+	  <div class=" date-m"><a href="../../../alpha/2012/05/index.html">May</a></div>
+	  <div class=" date-y"><a href="../../../alpha/2012/index.html">2012</a>
+	  </div>
+	</div>
+	<div class="span1">
+	  <div class="qr-code">
+  <img src="http://chart.apis.google.com/chart?chs=50x50&cht=qr&chld=|0&chl=http%3A%2F%2Falpha.common-lisp.net%2Falpha%2F2012%2F05%2F07_add-a-custom-font.html"
+       alt="qr-code" />
+</div>
+
+	</div>
+	<h1 class="offset2" style="font-size: 250%">Add a custom font</h1>
+      </div>
+      <nav>
+	<ul class="pager">
+	  <li class="previous"><a href="../../../alpha/2012/05/03_some-bootstrap-features.html"><i class="icon-chevron-left"></i>&nbsp;Some Bootstrap features</a></li><li class="next" style="text-align: right;"><a href="../../../alpha/2012/05/21_create-static-pages.html">Create static pages&nbsp;<i class="icon-chevron-right"></i></a></li>
+	</ul>
+      </nav>
+    </div>
+
+  </header>
+  <div class="article-content">
+    <p>
+<a href="http://www.google.com/webfonts">Google webfonts</a> can be easily used in o-blog in 2 different ways: using
+the Google API, or by providing resources in the <code>templates/style</code> directory.
+</p>
+
+
+<div class="alert alert-warning"><p class="alert-heading">Caution</p>
+
+<p>
+Using many font styles can slow down your webpage, so only select the font
+styles that you actually need on your webpage.
+</p>
+
+
+</div>
+
+
+<p>
+Both examples below use the <a href="http://www.yanone.de/typedesign/kaffeesatz/">Yanone Kaffeesatz</a> font.
+</p>
+
+<div id="outline-container-1" class="outline-3">
+<h3 id="sec-1">Using Google API</h3>
+<div class="outline-text-3" id="text-1">
+
+
+<p>
+The <a href="http://www.google.com/webfonts#QuickUsePlace:quickUse/Family:">quick use</a> provides an import snippet such as:
+</p>
+
+
+
+<pre class="src src-css"><span style="color: #0000ee; font-weight: bold;">@import</span> url(<span style="color: #00cd00;">"http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700&amp;subset=latin,latin-ext"</span>);
+</pre>
+
+
+<p>
+That line should be included into the
+<code>templates/style/less/o-blog-default.less</code> file in which you should also add
+something like:
+</p>
+
+
+
+<pre class="src src-css"><span style="color: #0000ee; font-weight: bold;">h1, h2, h3, h4, h5, h6 </span>{
+    <span style="color: #cdcd00;">font-family</span>: <span style="color: #00cd00;">"Yanone Kaffeesatz"</span>, sans-serif;
+}
+</pre>
+
+
+<p>
+And that's it.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-3">
+<h3 id="sec-2">Providing resources</h3>
+<div class="outline-text-3" id="text-2">
+
+
+<p>
+That is less efficient in terms of network resources but provides a good
+alternative for offline publications.
+</p>
+
+<p>
+The script <code>get-font</code> does all needed jobs.
+</p>
+<p>
+  #+O<sub>BLOG</sub><sub>SOURCE</sub>: ../get-font sh
+</p>
+<p>
+You can run:
+</p>
+
+
+
+<pre class="src src-sh">./get-font <span style="color: #00cd00;">'http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,200,300,700&amp;subset=latin,latin-ext'</span>
+</pre>
+
+
+<p>
+And add the font declaration in <code>templates/style/less/o-blog-default.less</code>:
+</p>
+
+
+
+<pre class="src src-css"><span style="color: #0000ee; font-weight: bold;">@import</span> <span style="color: #00cd00;">"font-Yanone-Kaffeesatz.less"</span>;
+</pre>
+
+
+<p>
+Finally, declare its use as in the Google API version:
+</p>
+
+
+
+<pre class="src src-css"><span style="color: #0000ee; font-weight: bold;">h1, h2, h3, h4, h5, h6 </span>{
+    <span style="color: #cdcd00;">font-family</span>: <span style="color: #00cd00;">"Yanone Kaffeesatz"</span>, sans-serif;
+}
+</pre>
+
+</div>
+</div>
+
+  </div>
+  
+  <footer class="well article-footer">
+    Posted on <time datetime="2012-05-07T16:38:00Z"> Monday May, 07 2012 at 16:38:00</time>.
+    <nav class="tag-cloud">
+      <h1><i class="icon-tags"></i> related tags</h1>
+      <ul>
+	<li class="label label-inverse small"><a href="../../../tags/usage.html">usage</a></li><li class="label label-inverse small"><a href="../../../tags/bootstrap.html">Bootstrap</a></li><li class="label label-inverse small"><a href="../../../tags/o-blog.html">o-blog</a></li>
+      </ul>
+    </nav>
+  </footer>
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'alpha-cl-net'; // required: replace example with your forum shortname
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+      </div>
+      <div id="footer">
+	<div class="container">
+	  <div class="row">
+	    <section class="span3">
+	      <h1>About</h1>
+	      <p>
+CANNOT INCLUDE FILE about.org
+</p>
+	    </section>
+	    <nav id="links" class="span3">
+	      <h1>Links</h1>
+	      <ul>
+		Lisp error in nil: (void-function drewc.org:replace-<i>-icons)
+	      </ul>
+	    </nav>
+	    <nav id="archives" class="span3">
+	      <h1><a href="../../../archives.html">Archives</a></h1>
+	      <ul>
+		<li><a href="../../../alpha/2012/08/21_adding-an-image-into-a-post.html">Adding an image into a post</a></li> <li><a href="../../../alpha/2012/05/21_create-static-pages.html">Create static pages</a></li> <li><a href="../../../alpha/2012/05/07_add-a-custom-font.html">Add a custom font</a></li> <li><a href="../../../alpha/2012/05/03_some-bootstrap-features.html">Some Bootstrap features</a></li> <li><a href="../../../alpha/2012/02/10_using-bootstrap-grid.html">Using Bootstrap grid</a></li> <li><a href="../../../alpha/2012/02/10_adding-icons.html">Adding icons</a></li> <li><a href="../../../alpha/2012/02/09_using-modal-source-code.html">Using modal source code</a></li> <li><a href="../../../alpha/2012/01/15_alerts.html">Alerts</a></li> <li><a href="../../../alpha/2012/01/10_some-html5-samples.html">Some HTML5 samples</a></li> <li><a href="../../../alpha/2012/01/07_example-of-some-org-syntax.html">Example of some org syntax</a></li> 
+	      </ul>
+	    </nav>
+	    <nav class="tags span3">
+	      <h1><a href="../../../tags/index.html">Tags</a></h1>
+	      <ul>
+  <li style="font-size: 150.00%;"><a href="../../../tags/bootstrap.html">Bootstrap</a></li> <li style="font-size: 80.00%;"><a href="../../../tags/html-5.html">html 5</a></li> <li style="font-size: 136.00%;"><a href="../../../tags/o-blog.html">o-blog</a></li> <li style="font-size: 80.00%;"><a href="../../../tags/org.html">org</a></li> <li style="font-size: 220.00%;"><a href="../../../tags/usage.html">usage</a></li> 
+</ul>
+
+	    </nav>
+	  </div>
+	</div>
+	<div class="copyright" style="text-align: center;">
+	  <p>
+Copyright © 2012-2013 <a href="mailto:drewc%20❨ɑƦɵϐɑʂɛ❩%20drewc%20❨Ƥɵɩɲʈ❩%20org">Drew Crampsie</a>. Published under the terms of the
+<a href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/">Creative Commons Attribution-Noncommercial-Share Alike 2.0 France License</a>.
+</p>
+	  <p>Powered by <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
+	</div>
+      </div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38433597-1']);
+  _gaq.push(['_setDomainName', 'common-lisp.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
+

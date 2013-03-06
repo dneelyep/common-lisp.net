@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>
+     Functions
+    </title>
+    <link rel="stylesheet" type="text/less" href="./style/bootstrap/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="generator" content="o-blog version 1.2-121-g4481fd3"/>
+    
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+
+      <div class="navbar-inner">
+      <div class="container">
+	<a class="brand" 
+	   href="./index.html">
+	 Common Lisp.net : Alpha
+        </a>
+	<ul class="nav">
+<li><a href="./language.html"><i class="icon-cog"></i> the Language</a>
+
+</li>
+<li><a href="./community.html"><i class="icon-flag"></i> Community</a>
+
+</li>
+<li><a href="./roadmap.html"><i class="icon-tasks"></i> Resources</a>
+
+</li>
+<li><a href="./archives.html"><i class="icon-list"></i> Archives</a>
+
+</li>
+<li><a href="./index.xml"><i class="icon-headphones"></i> RSS</a>
+</li>
+</ul>
+
+
+	
+      </div>
+      </div>
+    </div>
+    <div class="subnav subnav-fixed visible-desktop">
+      <div class="container">
+       <ul class="breadcrumb">
+  <li><a href="./index.html">Home</a> <span class="divider">/</span></li>
+  <li>Functions</li>
+  </ul>
+
+      </div>
+    </div>
+    <div id="page" class="container">
+
+<article>
+  <header class="article-header">
+    <div class="well">
+      <div class="row">
+	<div class="span1">
+	  <div class="qr-code">
+  <img src="http://chart.apis.google.com/chart?chs=50x50&cht=qr&chld=|0&chl=http%3A%2F%2Falpha.common-lisp.net%2Ffunctions.html"
+       alt="qr-code" />
+</div>
+
+	</div>
+	<h1 class="offset1" style="font-size: 250%;">Functions</h1>
+      </div>
+    </div>
+  </header>
+  <div class="article-content">
+    <p>
+Basically any elisp function could be used within an o-blog template,
+as long as they are known when exporting. Meanwhile some functions are
+specifically made to be used within templates. These functions are
+prefixed by <code>ob:</code>.
+</p>
+<p>
+Descriptions are taken from function docstrings.
+</p>
+
+<div id="outline-container-1" class="outline-3">
+<h3 id="sec-1">Function: <code>(ob:get-posts &amp;optional PREDICATE COUNT SORTFUNC COLLECT)</code></h3>
+<div class="outline-text-3" id="text-1">
+
+
+<p>
+Return posts (from <code>POSTS</code> as defined in <code>org-publish-blog</code>) matching
+<code>PREDICATE</code>. Limit to <code>COUNT</code> results if defined and sorted using
+<code>SORTFUNC</code>.
+</p>
+<p>
+<code>PREDICATE</code> is a function that runs for each post, with the post
+itself as argument. If <code>PREDICATE</code> is nil, no filtering will be done
+on posts.
+</p>
+<p>
+<code>SORTFUNC</code> uses a <code>sort</code> <code>PREDICATE</code>.
+</p>
+<p>
+If <code>COLLECT</code> is defined, only returns the <code>COLLECT</code> field of a
+<code>ob:post</code> structure.
+</p>
+<p>
+Examples:
+</p>
+<p>
+Getting the last 10 posts:
+</p>
+
+
+
+<pre class="example">(ob:get-posts nil 10)
+</pre>
+
+
+
+<p>
+Getting posts from January 2012:
+</p>
+
+
+
+<pre class="example">(ob:get-posts
+   (lambda (x)
+      (and (= 2012 (ob:post-year x))
+           (= 1 (ob:post-month x)))))
+</pre>
+
+
+<p>
+Getting all categories:
+</p>
+
+
+
+<pre class="example">(ob:get-posts nil nil nil 'category)
+</pre>
+
+
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-4">
+<h4 id="sec-1-1">Template usages</h4>
+<div class="outline-text-4" id="text-1-1">
+
+
+<p>
+For archive navigation:
+</p>
+
+
+
+<pre class="example">&lt;nav id="archives"&gt;
+  &lt;h1&gt;Archives&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;lisp&gt;
+      (loop for p in (ob:get-posts nil 10)
+            do (insert (format "&lt;li&gt;&lt;a href=\"%s/%s\"&gt;%s&lt;/a&gt;&lt;/li&gt; "
+                               (ob:path-to-root)
+                               (ob:post-htmlfile p)
+                               (ob:post-title p))))
+    &lt;/lisp&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-3">
+<h3 id="sec-2">Function: <code>(ob:get-post-by-id ID)</code></h3>
+<div class="outline-text-3" id="text-2">
+
+
+<p>
+Return post whose id is <code>ID</code>.
+</p>
+
+</div>
+
+<div id="outline-container-2-1" class="outline-4">
+<h4 id="sec-2-1">Template usages</h4>
+<div class="outline-text-4" id="text-2-1">
+
+
+<p>
+Posts navigation, setting up links to previous and next post:
+</p>
+
+
+
+<pre class="example">&lt;nav class="articles-nav"&gt;
+  &lt;ul&gt;
+    &lt;lisp&gt;
+      (progn
+        ;; Get previous post
+        (let ((ppost (ob:get-post-by-id (1+ (ob:post-id POST)))))
+          (if ppost
+              (insert (format "&lt;li class=\"prev\"&gt;&lt;a href=\"%s/%s\"&gt;%s&lt;/a&gt;&lt;/li&gt;"
+                              (ob:path-to-root)
+                              (ob:post-htmlfile ppost)
+                              (ob:post-title ppost)))
+            (insert "&lt;li&gt;&amp;nbsp;&lt;/li&gt;")))
+        ;; Get next post
+        (let ((npost (ob:get-post-by-id (1- (ob:post-id POST)))))
+          (if npost
+              (insert (format "&lt;li class=\"next\"&gt;&lt;a href=\"%s/%s\"&gt;%s&lt;/a&gt;&lt;/li&gt;"
+                              (ob:path-to-root)
+                              (ob:post-htmlfile npost)
+                              (ob:post-title npost)))
+            (insert "&lt;li&gt;&amp;nbsp;&lt;/li&gt;"))))
+    &lt;/lisp&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-3">
+<h3 id="sec-3">Function: <code>(ob:get-snippet NAME)</code></h3>
+<div class="outline-text-3" id="text-3">
+
+
+<p>
+Get first snippet matching <code>NAME</code>.
+</p>
+
+</div>
+
+<div id="outline-container-3-1" class="outline-4">
+<h4 id="sec-3-1">Template usages</h4>
+<div class="outline-text-4" id="text-3-1">
+
+
+<p>
+Insert the <i>About</i> section in page footer:
+</p>
+
+
+
+<pre class="example">&lt;h1&gt;About&lt;/h1&gt;
+&lt;address&gt;
+  &lt;lisp&gt;(ob:post-content-html (ob:get-snippet "About"))&lt;/lisp&gt;
+&lt;/address&gt;
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-4" class="outline-3">
+<h3 id="sec-4">Function: <code>(ob:get-header HEADER &amp;optional ALL)</code></h3>
+<div class="outline-text-3" id="text-4">
+
+
+<p>
+Get <code>HEADER</code> from blog buffer as defined in <code>BLOG</code> global context variable.
+</p>
+<p>
+Returns only the first match, unless <code>ALL</code> is defined.
+</p>
+
+</div>
+
+<div id="outline-container-4-1" class="outline-4">
+<h4 id="sec-4-1">Template usages</h4>
+<div class="outline-text-4" id="text-4-1">
+
+
+<p>
+Get the last updated header for RSS export:
+</p>
+
+
+
+<pre class="example">&lt;updated&gt;&lt;lisp&gt;(ob:format-date (ob:get-header "DATE"))&lt;/lisp&gt;&lt;/updated&gt;
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-5" class="outline-3">
+<h3 id="sec-5">Function: <code>(ob:insert-template TEMPLATE)</code></h3>
+<div class="outline-text-3" id="text-5">
+
+
+<p>
+Insert <code>TEMPLATE</code> in current buffer.
+</p>
+
+</div>
+
+<div id="outline-container-5-1" class="outline-4">
+<h4 id="sec-5-1">Template usages</h4>
+<div class="outline-text-4" id="text-5-1">
+
+
+<p>
+Insert html header:
+</p>
+
+
+
+<pre class="example">&lt;lisp&gt;(ob:insert-template "page_header.html")&lt;/lisp&gt;
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-3">
+<h3 id="sec-6">Function: <code>(ob:format-date DATE &amp;optional FORMAT LOCALE)</code></h3>
+<div class="outline-text-3" id="text-6">
+
+
+<p>
+Format <code>DATE</code> using <code>FORMAT</code> and <code>LOCALE</code>.
+</p>
+<p>
+<code>DATE</code> can either be a string suitable for <code>parse-time-string</code> or a list of
+integers using <code>current-time</code> format.
+</p>
+<p>
+<code>FORMAT</code> is a <code>format-time-string</code> compatible definition. If not
+set, ISO8601 <code>%Y-%m-%dT%TZ</code> format will be used.
+</p>
+
+</div>
+
+<div id="outline-container-6-1" class="outline-4">
+<h4 id="sec-6-1">Template usages</h4>
+<div class="outline-text-4" id="text-6-1">
+
+
+<p>
+Add a human-readable timestamp for a post:
+</p>
+
+
+
+<pre class="example">Posted on &lt;time datetime="&lt;lisp&gt; (ob:format-date (ob:post-timestamp POST)) &lt;/lisp&gt;"&gt;
+  &lt;lisp&gt; (ob:format-date (ob:post-timestamp POST) "%A %B, %d %Y at %H:%M:%S") &lt;/lisp&gt;
+&lt;/time&gt;.
+</pre>
+
+</div>
+</div>
+</div>
+
+  </div>
+</article>
+      </div>
+      <div id="footer">
+	<div class="container">
+	  <div class="row">
+	    <section class="span3">
+	      <h1>About</h1>
+	      <p>
+This an Alpha test site for what will become common-lisp.net
+</p>
+
+	    </section>
+	    <nav id="links" class="span3">
+	      <h1>Links</h1>
+	      <ul>
+		<ul>
+<li><a href="./index.html"><i class="icon-home"></i> Home</a>
+
+</li>
+<li><a href="./language.html"><i class="icon-cog"></i> the Language</a>
+
+</li>
+<li><a href="./community.html"><i class="icon-flag"></i> Community</a>
+
+</li>
+<li><a href="./roadmap.html"><i class="icon-tasks"></i> Resources</a>
+
+</li>
+<li><a href="./archives.html"><i class="icon-list"></i> Archives</a>
+
+</li>
+<li><a href="./index.xml"><i class="icon-headphones"></i> RSS</a>
+</li>
+</ul>
+
+
+	      </ul>
+	    </nav>
+	    <nav id="archives" class="span3">
+	      <h1><a href="./archives.html">Archives</a></h1>
+	      <ul>
+		<li><a href="./tips/2012/08/21_adding-an-image-into-a-post.html">Adding an image into a post</a></li> <li><a href="./tips/2012/05/21_create-static-pages.html">Create static pages</a></li> <li><a href="./tips/2012/05/07_add-a-custom-font.html">Add a custom font</a></li> <li><a href="./tips/2012/05/03_some-bootstrap-features.html">Some Bootstrap features</a></li> <li><a href="./tips/2012/02/10_using-bootstrap-grid.html">Using Bootstrap grid</a></li> <li><a href="./tips/2012/02/10_adding-icons.html">Adding icons</a></li> <li><a href="./tips/2012/02/09_using-modal-source-code.html">Using modal source code</a></li> <li><a href="./tips/2012/01/15_alerts.html">Alerts</a></li> <li><a href="./tips/2012/01/10_some-html5-samples.html">Some HTML5 samples</a></li> <li><a href="./tips/2012/01/07_example-of-some-org-syntax.html">Example of some org syntax</a></li> 
+	      </ul>
+	    </nav>
+	    <nav class="tags span3">
+	      <h1><a href="./tags/index.html">Tags</a></h1>
+	      <ul>
+  <li style="font-size: 150.00%;"><a href="./tags/bootstrap.html">Bootstrap</a></li> <li style="font-size: 80.00%;"><a href="./tags/html-5.html">html 5</a></li> <li style="font-size: 136.00%;"><a href="./tags/o-blog.html">o-blog</a></li> <li style="font-size: 80.00%;"><a href="./tags/org.html">org</a></li> <li style="font-size: 220.00%;"><a href="./tags/usage.html">usage</a></li> 
+</ul>
+
+	    </nav>
+	  </div>
+	</div>
+	<div class="copyright" style="text-align: center;">
+	  <p>
+Copyright © 2012-2013 <a href="mailto:drewc%20❨ɑƦɵϐɑʂɛ❩%20drewc%20❨Ƥɵɩɲʈ❩%20org">Drew Crampsie</a>. Published under the terms of the
+<a href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/">Creative Commons Attribution-Noncommercial-Share Alike 2.0 France License</a>.
+</p>
+	  <p>Powered by <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
+	</div>
+      </div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38433597-1']);
+  _gaq.push(['_setDomainName', 'common-lisp.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
+

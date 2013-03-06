@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>
+     Structures
+    </title>
+    <link rel="stylesheet" type="text/less" href="./style/bootstrap/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="generator" content="o-blog version 1.2-121-g4481fd3"/>
+    
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+
+      <div class="navbar-inner">
+      <div class="container">
+	<a class="brand" 
+	   href="./index.html">
+	 Common Lisp.net : Alpha
+        </a>
+	<ul class="nav">
+<li><a href="./language.html"><i class="icon-cog"></i> the Language</a>
+
+</li>
+<li><a href="./community.html"><i class="icon-flag"></i> Community</a>
+
+</li>
+<li><a href="./roadmap.html"><i class="icon-tasks"></i> Resources</a>
+
+</li>
+<li><a href="./archives.html"><i class="icon-list"></i> Archives</a>
+
+</li>
+<li><a href="./index.xml"><i class="icon-headphones"></i> RSS</a>
+</li>
+</ul>
+
+
+	
+      </div>
+      </div>
+    </div>
+    <div class="subnav subnav-fixed visible-desktop">
+      <div class="container">
+       <ul class="breadcrumb">
+  <li><a href="./index.html">Home</a> <span class="divider">/</span></li>
+  <li>Structures</li>
+  </ul>
+
+      </div>
+    </div>
+    <div id="page" class="container">
+
+<article>
+  <header class="article-header">
+    <div class="well">
+      <div class="row">
+	<div class="span1">
+	  <div class="qr-code">
+  <img src="http://chart.apis.google.com/chart?chs=50x50&cht=qr&chld=|0&chl=http%3A%2F%2Falpha.common-lisp.net%2Fstructures.html"
+       alt="qr-code" />
+</div>
+
+	</div>
+	<h1 class="offset1" style="font-size: 250%;">Structures</h1>
+      </div>
+    </div>
+  </header>
+  <div class="article-content">
+    <p>
+Some variables are available when publishing lisp parts of templates. These
+variables are defined using <a href="http://www.gnu.org/software/emacs/manual/html_node/cl/Structures.html">defstruct</a>, then any slot (or property) is
+available using a <code>(type-slot variable)</code> form.
+</p>
+
+<div id="outline-container-1" class="outline-3">
+<h3 id="sec-1">Structures</h3>
+<div class="outline-text-3" id="text-1">
+
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-4">
+<h4 id="sec-1-1">Structures: <code>ob:blog</code></h4>
+<div class="outline-text-4" id="text-1-1">
+
+
+<p>
+Structure used to define a blog:
+</p>
+<ul>
+<li><code>file</code>: The blog source file (read-only).
+</li>
+<li><code>buffer</code>: Buffer visiting the blog file (read-only).
+</li>
+<li><code>publish-dir</code>: Where to publish the blog, defined by the <code>#+PUBLISH_DIR:</code>
+   header directive or <code>out</code> in the same directory as the blog source file.
+</li>
+<li><code>template-dir</code>: Location of the template directory defined by the
+   <code>#+TEMPLATE_DIR:</code> header directive or the <code>templates</code> directory of the
+   <code>o-blog</code> library.
+</li>
+<li><code>style-dir</code>: Path of the <i>css</i> files defined by the <code>#STYLE_DIR:</code> header
+   directive or <code>style</code>. This directory is relative to <code>template-dir</code>.
+</li>
+<li><code>posts-filter</code>: Default filter for posts defined by the <code>#POSTS_FILTER:</code>
+   header directive or <code>+TODO={DONE}</code>.
+</li>
+<li><code>static-filter</code>: Default filter for static pages defined by the
+   <code>#STATIC_FILTER:</code> header directive or <code>+PAGES={.*}</code>.
+</li>
+<li><code>snippet-filter</code>  Default filter for snippets defined by the
+   <code>#SNIPPET_FILTER:</code> header directive or <code>+SNIPPET={.*}</code>.
+</li>
+<li><code>title</code>: Blog title defined by the <code>#+TITLE:</code> header directive.
+</li>
+<li><code>description</code>: Blog description defined by the <code>#+DESCRIPTION:</code> header
+   directive.
+</li>
+<li><code>url</code>: Blog base URL defined by the <code>#+URL:</code> header.
+</li>
+<li><code>default-category</code>: Default category for posts defined by the
+   <code>#DEFAULT_CATEGORY:</code> header or <code>Blog</code>.
+</li>
+<li><code>disqus</code>: The <a href="http://docs.disqus.com/developers/universal/">Disqus</a> account (called a forum on <a href="http://disqus.com">Disqus</a>) this o-blog
+   site belongs to. Defined by the <code>#+DISQUS:</code> header.
+</li>
+<li><code>filename-sanitizer</code>: A 1-argument function to be used to sanitize
+   post filenames. Defined by <code>#+FILENAME_SANITIZER:</code> or
+   <code>ob-sanitize-string</code>.
+</li>
+<li><code>post-sorter</code>: A 2-argument function to be used to sort the
+   posts. Defined by <code>#+POST_SORTER:</code> or <code>ob-sort-posts-by-date</code>.
+</li>
+</ul>
+
+
+<p>
+Example:
+</p>
+
+
+
+<pre class="example">;; get the title of the current blog defined in variable BLOG.
+(ob:blog-title BLOG)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-4">
+<h4 id="sec-1-2">Structures: <code>ob:post</code></h4>
+<div class="outline-text-4" id="text-1-2">
+
+
+<ul>
+<li><code>id</code>: The post's numerical id. Posts are sort by reversed chronological
+   order. The most recent post get the id 0.
+</li>
+<li><code>title</code>: The post title, read from the entry title.
+</li>
+<li><code>timestamp</code>: The post timestamp given by the <code>CLOSED</code> property or the
+   current time.
+</li>
+<li><code>year</code>: Numerical year computed from <code>timestamp</code>.
+</li>
+<li><code>month</code>: Numerical month computed from <code>timestamp</code>.
+</li>
+<li><code>day</code>: Numerical day computed from <code>timestamp</code>.
+</li>
+<li><code>category</code>: Category read from <code>CATEGORY</code> property org <code>blog</code>.
+</li>
+<li><code>tags</code>: List of <code>ob:tags</code>.
+</li>
+<li><code>template</code>: Template to use for current post read from <code>TEMPLATE</code>
+   property or <code>blog_post.html</code>.
+</li>
+<li><code>filepath</code>: Relative path from the blog root directory to the post
+   directory (directory only).
+</li>
+<li><code>filename</code>: Sanitized filename generated from <code>title</code>.
+</li>
+<li><code>htmlfile</code>: Full relative path to the post html file (file and
+   directory).
+</li>
+<li><code>path-to-root</code>: Relative path from the post html file to the blog root.
+</li>
+<li><code>content</code>: Raw content of the post (Org-mode format).
+</li>
+<li><code>content-html</code>: HTML export of the post.
+</li>
+</ul>
+
+
+<p>
+Example:
+</p>
+
+
+
+<pre class="example">;; Get the HTML content of the post defined in variable POST.
+(ob:post-content-html POST)
+</pre>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-4">
+<h4 id="sec-1-3">Structures: <code>ob:tags</code></h4>
+<div class="outline-text-4" id="text-1-3">
+
+
+<p>
+Structure used to define a tag:
+</p>
+<ul>
+<li><code>name</code>: The string defining the tag name.
+</li>
+<li><code>safe</code>: Web/URL-safe tag name.
+</li>
+<li><code>count</code>: How many times the tag is used across posts.
+</li>
+<li><code>size</code>: The font size in percent.
+</li>
+</ul>
+
+
+<p>
+Example:
+</p>
+
+
+
+<pre class="example">;; get the name of the tag defined in variable TAG.
+(ob:tags-name TAG)
+</pre>
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-3">
+<h3 id="sec-2">Variables</h3>
+<div class="outline-text-3" id="text-2">
+
+
+<p>
+The following variables are always available when publishing a blog:
+</p>
+<ul>
+<li><code>BLOG</code> (<code>ob:blog</code>): Information about the blog being published.
+</li>
+<li><code>POSTS</code> (list of <code>ob:post</code>): List of all posts of the blog or restricted
+   list of posts (depending on what is exported).
+</li>
+<li><code>ALL-POSTS</code>: A copy of <code>POSTS</code> except this <b>always</b> contains all the
+   posts from the blog.
+</li>
+<li><code>STATIC</code> (list of <code>ob:post</code>): List of static pages.
+</li>
+<li><code>SNIPPETS</code> (list of <code>ob:post</code>): List of snippets pages.
+</li>
+<li><code>TAGS</code> (list of <code>ob:tags</code>): List of all tags.
+</li>
+</ul>
+
+
+<p>
+Some variables may be defined in some functions:
+</p>
+<ul>
+<li><code>POST</code> (<code>ob:post</code>): The post (or static page) being currently published.
+</li>
+<li><code>TAG</code> (<code>ob:tags</code>): The tag being currently published.
+</li>
+<li><code>CATEGORY</code> (<code>string</code>): The category being published.
+</li>
+<li><code>YEAR</code>, <code>MONTH (=integer</code>): The year and month being published.
+</li>
+<li><code>PATH-TO-ROOT</code> (<code>string</code>): (internal use only, use <code>ob:path-to-root</code>
+   instead) Path to blog root used by <code>ob:path-to-root</code>.
+</li>
+</ul>
+
+</div>
+</div>
+
+  </div>
+</article>
+      </div>
+      <div id="footer">
+	<div class="container">
+	  <div class="row">
+	    <section class="span3">
+	      <h1>About</h1>
+	      <p>
+This an Alpha test site for what will become common-lisp.net
+</p>
+
+	    </section>
+	    <nav id="links" class="span3">
+	      <h1>Links</h1>
+	      <ul>
+		<ul>
+<li><a href="./index.html"><i class="icon-home"></i> Home</a>
+
+</li>
+<li><a href="./language.html"><i class="icon-cog"></i> the Language</a>
+
+</li>
+<li><a href="./community.html"><i class="icon-flag"></i> Community</a>
+
+</li>
+<li><a href="./roadmap.html"><i class="icon-tasks"></i> Resources</a>
+
+</li>
+<li><a href="./archives.html"><i class="icon-list"></i> Archives</a>
+
+</li>
+<li><a href="./index.xml"><i class="icon-headphones"></i> RSS</a>
+</li>
+</ul>
+
+
+	      </ul>
+	    </nav>
+	    <nav id="archives" class="span3">
+	      <h1><a href="./archives.html">Archives</a></h1>
+	      <ul>
+		<li><a href="./tips/2012/08/21_adding-an-image-into-a-post.html">Adding an image into a post</a></li> <li><a href="./tips/2012/05/21_create-static-pages.html">Create static pages</a></li> <li><a href="./tips/2012/05/07_add-a-custom-font.html">Add a custom font</a></li> <li><a href="./tips/2012/05/03_some-bootstrap-features.html">Some Bootstrap features</a></li> <li><a href="./tips/2012/02/10_using-bootstrap-grid.html">Using Bootstrap grid</a></li> <li><a href="./tips/2012/02/10_adding-icons.html">Adding icons</a></li> <li><a href="./tips/2012/02/09_using-modal-source-code.html">Using modal source code</a></li> <li><a href="./tips/2012/01/15_alerts.html">Alerts</a></li> <li><a href="./tips/2012/01/10_some-html5-samples.html">Some HTML5 samples</a></li> <li><a href="./tips/2012/01/07_example-of-some-org-syntax.html">Example of some org syntax</a></li> 
+	      </ul>
+	    </nav>
+	    <nav class="tags span3">
+	      <h1><a href="./tags/index.html">Tags</a></h1>
+	      <ul>
+  <li style="font-size: 150.00%;"><a href="./tags/bootstrap.html">Bootstrap</a></li> <li style="font-size: 80.00%;"><a href="./tags/html-5.html">html 5</a></li> <li style="font-size: 136.00%;"><a href="./tags/o-blog.html">o-blog</a></li> <li style="font-size: 80.00%;"><a href="./tags/org.html">org</a></li> <li style="font-size: 220.00%;"><a href="./tags/usage.html">usage</a></li> 
+</ul>
+
+	    </nav>
+	  </div>
+	</div>
+	<div class="copyright" style="text-align: center;">
+	  <p>
+Copyright © 2012-2013 <a href="mailto:drewc%20❨ɑƦɵϐɑʂɛ❩%20drewc%20❨Ƥɵɩɲʈ❩%20org">Drew Crampsie</a>. Published under the terms of the
+<a href="http://creativecommons.org/licenses/by-nc-sa/2.0/fr/">Creative Commons Attribution-Noncommercial-Share Alike 2.0 France License</a>.
+</p>
+	  <p>Powered by <a href="https://github.com/renard/o-blog">o-blog</a>.</p>
+	</div>
+      </div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38433597-1']);
+  _gaq.push(['_setDomainName', 'common-lisp.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
+
