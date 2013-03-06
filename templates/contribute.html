@@ -1,0 +1,16 @@
+<lisp>(ob:insert-template "page_header.html")</lisp>
+<article>
+  <div class="article-content">
+    <lisp>
+      (ob:post-content-html POST)
+    </lisp>
+  </div>
+
+  <div class="container">
+    <lisp>
+      (drewc.org:replace-<i>-icons  
+	(ob:post-content-html (ob:get-snippet "Contributers")))
+    </lisp>    
+  </div>
+</article>
+<lisp>(ob:insert-template "page_footer.html")</lisp>

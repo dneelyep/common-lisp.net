@@ -1,0 +1,948 @@
+#+TITLE: Common Lisp.net : Alpha
+#+DESCRIPTION: The cl.net alpha site
+#+DATE: 2013-02-02 02:02:02
+
+#+STARTUP: logdone
+#+PUBLISH_DIR: alpha-www
+#+TEMPLATE_DIR: ../templates
+#+URL: http://alpha.common-lisp.net
+
+#+DEFAULT_CATEGORY: News
+#+DISQUS: alpha-cl-net
+#+FILENAME_SANITIZER: ob-sanitize-string
+#+POST_SORTER: ob-sort-posts-by-title
+
+#+POST_BUILD_SHELL: cmd 1
+#+POST_BUILD_SHELL: cmd 2
+#+POST_BUILD_SHELL: cmd 3
+#+POST_BUILD_SHELL: cmd 4
+
+* Common Lisp.net : Index
+  :PROPERTIES:
+  :PAGE:     index.html
+  :TEMPLATE: blog_static_no_title.html
+  :END:
+
+
+#+begin_o_blog_row 8
+#+BEGIN_HTML 
+   <style type="text/css">
+
+.cl-net-hero-unit {
+        background-color: #fff;
+        text-align: center;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+
+.cl-net-hero-unit ul { 
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.cl-net-hero-unit li { 
+  padding-bottom: 10px;
+}
+ </style>
+#+END_HTML 
+
+#+HTML: <div class="cl-net-hero-unit">
+#+HTML: <h1>Common Lisp <img src="http://www.lisperati.com/lisplogo_flag_64.png"/></h1> 
+#+HTML: <h2>the #1=(programmable . #1#) programming language</h2> 
+#+HTML: </div>
+
+#+HTML: <h3> What is Common Lisp? </h3>
+
+Common Lisp is the modern, multi-paradigm, high-performance, compiled,
+ANSI-standardized descendant of the long-running family of Lisp
+programming languages.
+
+Common Lisp is known for being extremely flexible, having excellent
+support for object oriented programming, and fast prototyping
+capabilities. It also sports an extremely powerful macro system that
+allows you to tailor the language to your application, and a flexible
+run-time environment that allows modification and debugging of running
+applications (excellent for server-side development and long-running
+critical software).
+
+Common Lisp is a multi-paradigm programming language that allows you
+to to choose the approach and paradigm according to your application
+domain.
+
+#+o_blog_row_column 4
+
+#+HTML: <div class="cl-net-hero-unit" style="font-size: 200%;padding:15px;">
+ - [[file:{lisp}(ob:path-to-root){/lisp}/project-hosting.html][Project Hosting]] 
+ - [[file:{lisp}(ob:path-to-root){/lisp}/contribute.html][Contribute]] 
+ - [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][Changelog]]
+
+ 
+#+BEGIN_HTML 
+
+<h3>Documentation</h3>
+<form method=get action='http://l1sp.org/search'>
+<input type=text size=25 
+       name=q placeholder= 'Search for Documentation'>
+<input class='btn' type='submit' value='Search'>
+</form>
+
+<h3>News :</h3>
+<ul>
+<lisp>		
+ (loop for p in (let ((POSTS ALL-POSTS)) (ob:get-posts nil 3))		 
+   do (insert (format "<li><a href=\"%s/%s\">%s</a></li> "
+		  (ob:path-to-root)
+		  (ob:post-htmlfile p)
+		  (ob:post-title p)
+		  )))
+</lisp>
+</ul>
+
+#+END_HTML
+
+#+HTML: </div>
+
+#+end_o_blog_row
+
+#+begin_o_blog_row 5
+
+#+HTML: <h4>Install</h4>
+
+This should be all about how to install CL for unix, windows, and OSX.
+
+=quicklisp should be here as well=
+
+#+o_blog_row_column  6
+
+#+HTML: <h4>Learning</h4>
+
+#+begin_src lisp
+(this-should :be *about* :learning "Common Lisp")
+#+end_src
+
+... and maybe swank + slime
+#+begin_src emacs-lisp
+  (require 'slime)
+#+end_src
+
+#+end_o_blog_row
+
+
+** The Site
+
+The site [[http://common-lisp.net][Common Lisp.net]] has project hosting and mailing lists. 
+
+It is run and paid for by [[file:{lisp}(ob:path-to-root){/lisp}/contribute.html][Common Lispers.]] 
+
+#+HTML:  <lisp>(ob:insert-template "plugin_disqus.html")</lisp>
+
+* Project Hosting
+  :PROPERTIES:
+  :PAGE:     project-hosting.html
+  :END:
+
+** Project Hosting
+
+We offer projects web space, mailing lists, and disk space for a
+version control system. We have git, Subversion, darcs and CVS.
+
+
+** Creating a project
+
+Send an email to admin (at) common-lisp (dot) net with details about
+your project (your full name, your SSH public key, description of
+project, any members (and their full names), name of project and what
+license the code is released under). Hosting decisions are made on
+case-by-case basis.
+
+If your application is accepted a project directory owned by you, with
+project-name as its group will be created at
+/project/<project-name>. Any project members are simply made members
+of group project-name.
+
+As a first step, please take some time to add a simple web-page for
+your project. The quickest alternative edit the HTML for our sample
+project. After editing it to fit your project, you can upload it to
+our server (via scp). See also our section titled "Website".
+
+There are no limits placed on how much space you can use but please
+exercise care; you will be sharing this system with others. No CPU/RAM
+intensive tasks are to be performed on the server. You have shell
+access but don't use it unless you need to perform administrative
+tasks.
+
+Email to your account @common-lisp.net will be forwarded to the email
+address that you have supplied in your account application. Edit the
+file .forward in your home directory to change the forwarding address.
+
+** CVS access
+
+Your CVS repository is in /project/<project-name>/cvsroot. By default,
+any commits to it will be sent to <project-name>-cvs@common-lisp.net.
+
+Anonymous read-only CVS access is enabled by default (see FAQ), though
+it lags behind the writable repository by 15 minutes.
+
+Your CVS repository will also be available through the web at
+http://common-lisp.net/cgi-bin/viewcvs.cgi/?cvsroot=<project-name>.
+
+** Subversion access
+
+Your Subversion repository is in /project/<project-name>/svn. By
+default, any commits to it will be sent to
+<project-name>-cvs@common-lisp.net.
+
+Anonymous read-only Subversion access is enabled by default (see FAQ).
+
+
+** Repositories over the web
+
+Your CVS and Subversion repositories are viewable over the web by
+default as long as you don't change the default configuration. For
+darcs you have to create your repositories in
+/project/<project>/public_html/darcs/ and a nightly cronjob will pick
+them up and add them to the darcsweb config file. top Website
+
+/project/<project-name>/public_html is symlinked to from our webserver
+hierarchy and any files you put there will be available by pointing
+your webbrowser to http://common-lisp.net/project/<project-name>
+
+We would like to ask you to put up a minimal webpage as soon as
+possible (an empty directory does not say much about your
+project). The quickest way is to edit the HTML of our sample project
+page.
+
+Apache Server-Side Includes are enabled.
+
+
+** Automatic and manual mailinglists
+
+When your project is set up, three mailinglists are created (if you'd
+rather use NNTP you can subscribe Gmane to your list):
+
+<project-name>-devel
+<project-name>-announce
+<project-name>-cvs
+
+You, the owner, are subscribed to all of these mailinglists by
+default. Any members added later will have to subscribe to the ones
+they want on their own, via the Mailman interface at:
+
+http://lists.common-lisp.net/mailman/listinfo/<project-name>-devel
+http://lists.common-lisp.net/mailman/listinfo/<project-name>-announce
+http://lists.common-lisp.net/mailman/listinfo/<project-name>-cvs
+
+Additional mailing lists available on request.
+
+To stay up-to-date with all releases that are announced on the various
+mailinglists you simply need to be subscribed to the announcements
+mailinglist as this mailinglist is in turn subscribed to all
+<project-name>-announce lists.
+
+
+** Administrative requests
+
+For adding/removing project members, additional mailing lists, etc,
+send an email to admin (at) common-lisp (dot) net with all the
+relevant details (project name, etc).
+
+
+** List of project members
+
+Every night a cronjob runs which generates a list of users who have
+write access to your repositories and files. This list is placed in
+/var/www/pprinted-project-members/<project>. You may use Apache SSI to
+include this list on your project's web page, ie <!--#include
+virtual="../../pprinted-project-members/<project> -->
+
+
+** Restoring from backup
+
+We do not keep offsite backups so for all intents and purposes you
+must assume that there are no backups of any data. Please govern
+yourself accordingly.
+
+
+** Auto-nagging
+
+We have cronjobs which look for broken links, to see if you have
+changed from the default webpage, etc. If they detect any problems
+they will nag you about it every week until you fix the problem. To
+which email address are these nags sent? By default,
+<project-name>-devel@common-lisp.net however you can change this by
+creating a file named /project/<project-name>/owner-email-address and
+putting whatever email address you want in there. Only put your email
+address there or someone who has given you permission to do so; if you
+misuse this your project's approval is rescinded.
+
+
+** Trac
+
+We offer a Trac instance for projects who would like one. Please
+specify if want one when you set up your project or email admin (at)
+common-lisp (dot) net to request it for an existing project.
+
+To learn more about how Trac works at common-lisp.net, please read our
+Trac @ clnet introduction
+
+
+#+HTML:  <lisp>(ob:insert-template "plugin_disqus.html")</lisp>
+* The Language : Common Lisp
+  :PROPERTIES:
+  :PAGE:     language.html
+  :END:
+
+ what common lisp is, books and papers to read. etc.
+
+#+HTML:  <lisp>(ob:insert-template "plugin_disqus.html")</lisp>
+* The Common Lisp Community
+  :PROPERTIES:
+  :PAGE:    community.html
+  :END:
+
+ #lisp, #common-lisp.net, comp.lang.lisp, mailing lists , cliki, alu, cl-foundation, what else?
+
+#+HTML:  <lisp>(ob:insert-template "plugin_disqus.html")</lisp>
+* Site details
+** Contributers
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+The simplest way is to [[https://www.paypal.com/xclick/business%3Dtreasurer%2540cl-foundation.org&currency_code%3DEUR&item_name%3DDonation%2520common-lisp%252Enet&lc%3DGB][donate]] funds(/icon-shopping-cart/). Currently this
+is handled by [[http://www.cl-foundation.org/][Common Lisp Foundation]] via Paypal. If you need another
+way to donate, [[mailto:drewc@drewc.org][email me]], or leave a comment below.
+
+There is also the contribution of time(/icon-time/). This can be
+for administration of the cl-net users(/icon-user/), and helping with
+the site itself and all the details.
+
+This is list of contributers to [[http://common-lisp.net][Common Lisp.net]]
+itself. There are many other ways to contribute to Lisp(/icon-heart/).
+
+#+HTML: <h3> Contributers </h3>
+
+#+begin_o_blog_row 4
+#+HTML: <h4>2013</h4> 
+ - [[mailto:drewc@drewc.org][Drew Crampsie]] /icon-shopping-cart/ /icon-time/ /icon-user/
+#+o_blog_row_column 4
+#+HTML: <h4>2008-2012</h4> 
+ - [[mailto:hans.huebner@gmail.com][Hans Hübner]] /icon-time/ /icon-user/
+ - [[mailto:gwking@metabang.com][Garry King]] /icon-time/ /icon-user/
+ - [[mailto:drewc@drewc.org][Drew Crampsie]] /icon-shopping-cart/ /icon-time/ /icon-user/
+ - Many Others... /icon-time/ /icon-user/ /icon-heart/ 
+
+#+end_o_blog_row
+#+begin_o_blog_row 4
+#+HTML: <h4>2007</h4>
+ - Johan Ur Riise /icon-shopping-cart/
+ - Daniel Pezely /icon-shopping-cart/
+ - Hazen Babcock /icon-shopping-cart/
+ - Andy Hefner /icon-shopping-cart/
+ - Jack Unrue /icon-shopping-cart/
+ - Christian Lynbec /icon-shopping-cart/
+ - Holger Durer /icon-shopping-cart/
+ - [[mailto:drewc@drewc.org][Drew Crampsie]] /icon-shopping-cart/ /icon-time/ /icon-user/
+#+o_blog_row_column 3
+#+HTML: <h4>2006</h4>
+ - Mario Mommer /icon-shopping-cart/
+ - Nikodemus Siivola /icon-shopping-cart/
+ - Erik Enge /icon-shopping-cart/
+ - Paolo Amoroso /icon-shopping-cart/
+ - Craig Ludington /icon-shopping-cart/
+ - John Q Splittist /icon-shopping-cart/
+ - V J Arkesteijn /icon-shopping-cart/
+ - Liam Healy /icon-shopping-cart/
+ - Robert Strandh /icon-shopping-cart/
+ - Stephan Frank /icon-shopping-cart/
+ - Edmund Weitz /icon-shopping-cart/
+ - Anonymous /icon-shopping-cart/
+ - Anonymous /icon-shopping-cart/
+ - Frode Vatvedt Fjeld /icon-shopping-cart/
+ - Pascal Costanza /icon-shopping-cart/
+ - Anonymous /icon-shopping-cart/
+ - Roger /icon-shopping-cart/
+ - Christian Lynbech /icon-shopping-cart/
+ - Sven Van Caekenberghe /icon-shopping-cart/
+ - Andrew Cristina /icon-shopping-cart/
+ - Julian Stecklina /icon-shopping-cart/
+ - Anonymous /icon-shopping-cart/
+ - Larry Clapp /icon-shopping-cart/
+ - Geoff Cant /icon-shopping-cart/
+ - Gary Byers /icon-shopping-cart/
+ - Luke Gorrie /icon-shopping-cart/
+ - Jack Unrue /icon-shopping-cart/
+ - Stefan Scholl /icon-shopping-cart/
+ - Clozure Associates /icon-shopping-cart/
+ - Ian Eslick /icon-shopping-cart/
+ - Gary Klimowicz /icon-shopping-cart/
+ - [[mailto:drewc@drewc.org][Drew Crampsie]] /icon-shopping-cart/ /icon-time/ /icon-user/
+#+end_o_blog_row
+
+** Copyright
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+Copyright © 2012-2013 [[mailto:drewc%2520%E2%9D%A8%C9%91%C6%A6%C9%B5%CF%90%C9%91%CA%82%C9%9B%E2%9D%A9%2520drewc%2520%E2%9D%A8%C6%A4%C9%B5%C9%A9%C9%B2%CA%88%E2%9D%A9%2520org][Drew Crampsie]]. Published under the terms of the
+[[http://creativecommons.org/licenses/by-nc-sa/2.0/fr/][Creative Commons Attribution-Noncommercial-Share Alike 2.0 France License]].
+
+** About
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+#+INCLUDE: about.org
+
+** Navigation
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/language.html][/icon-cog/ the Language]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/community.html][/icon-flag/ Community]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/roadmap.html][/icon-tasks/ Resources]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list/ Archives]]
+
+- [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][/icon-headphones/ RSS]]
+
+** Navigation Footer
+  :PROPERTIES:
+  :SNIPPET:  t
+  :END:
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/index.html][/icon-home/ {lisp}(ob:gettext :home){/lisp}]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/language.html][/icon-cog/ the Language]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/community.html][/icon-flag/ Community]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/roadmap.html][/icon-tasks/ Resources]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/archives.html][/icon-list/ Archives]]
+
+  - [[file:{lisp}(ob:path-to-root){/lisp}/index.xml][/icon-headphones/ RSS]]
+
+** Articles by tags
+  :PROPERTIES:
+  :PAGE:     tags.html
+  :TEMPLATE: blog_post-by-tags.html
+  :END:
+
+
+* Contribute to Common-Lisp.Net
+  :PROPERTIES:
+  :PAGE:     contribute.html
+  :END:
+
+#+begin_o_blog_row 8
+#+BEGIN_HTML 
+   <style type="text/css">
+
+.cl-net-hero-unit {
+        background-color: #fff;
+        text-align: center;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+
+
+ </style>
+#+END_HTML 
+
+#+BEGIN_HTML
+<p>
+  
+    <lisp>
+      (drewc.org:replace-<i>-icons  
+	(ob:post-content-html (ob:get-snippet "Contributers")))
+    </lisp>    
+  
+</p>
+#+END_HTML
+
+
+#+o_blog_row_column 4
+
+#+HTML: <div class="cl-net-hero-unit" style="font-size: 200%;padding:15px;">
+
+ [[https://www.paypal.com/xclick/business%3Dtreasurer%2540cl-foundation.org&currency_code%3DEUR&item_name%3DDonation%2520common-lisp%252Enet&lc%3DGB][Donate]] funds
+#+HTML: <br/>
+ [[file:{lisp}(ob:path-to-root){/lisp}/changelog.html][Changelog]]
+
+#+BEGIN_HTML 
+<h3>Documentation</h3>
+<form method=get action='http://l1sp.org/search'>
+<input type=text size=25 
+       name=q placeholder= 'Search for Documentation'>
+<input class='btn' type='submit' value='Search'>
+</form>
+#+END_HTML
+#+HTML: </div>
+#+end_o_blog_row
+
+#+HTML:  <lisp>(ob:insert-template "plugin_disqus.html")</lisp>
+
+* Changelog
+  :PROPERTIES:
+  :PAGE:     changelog.html
+  :END:
+
+- 2013-02-16
+  - Added the blog that was already there with a =cl-net= tag.
+- 2013-02-02
+  - The start of a new cl.net site
+
+* Documentation
+** Debug
+   :PROPERTIES:
+   :PAGE:     debug.html
+   :TEMPLATE: debug.html
+   :SITEMAP:  f
+   :END:
+
+
+** Roadmap
+  :PROPERTIES:
+  :PAGE:     roadmap.html
+  :END:
+
+Here are some ideas for future versions
+
+- Implement the needed o-blog in CL
+
+** FAQ
+  :PROPERTIES:
+  :PAGE:     faq.html
+  :END:
+
+*** Why does my page look ugly/un-styled?
+
+Maybe you are using [[https://www.google.com/chrome/][Google Chrome]] and you're trying to view your site
+locally using a =file:///path/to/your/site/out/index.html= scheme.
+Open the JavaScript console =Ctrl+Shift+I= and you should see
+something like:
+
+#+begin_example
+XMLHttpRequest cannot load file:///path/to/your/site/out/out/style/css/o-blog.less. Cross origin requests are only supported for HTTP.
+less-1.2.1.min.js:8Uncaught Error: NETWORK_ERR: XMLHttpRequest Exception 101
+#+end_example
+
+If so, that is a known Chrome issue with loading local javascript
+files, and is actually a /security feature/ in Chrome.
+
+You can disable this with the =--allow-file-access-from-files= option
+in Chrome, or you can use another browser like Firefox, or setup a
+local webserver.
+
+To use a local webserver, there are many complex solutions such as
+[[http://nginx.org/][nginx]] or [[http://httpd.apache.org/][Apache]] or many [[http://en.wikipedia.org/wiki/Comparison_of_web_server_software][others]]. If you prefer a lighter and simpler
+solution using Python, simply run:
+
+#+begin_src sh
+cd /path/to/your/site && python -m SimpleHTTPServer
+#+end_src
+
+...and browse http://localhost:8000
+
+Or within Emacs you can run the [[https://github.com/jrhbailey/emacs-http-server][emacs-http-server]]:
+
+#+begin_src emacs-lisp
+(require 'httpd)
+(setq httpd-root "/path/to/your/site")
+(httpd-start)
+#+end_src
+
+...and browse http://localhost:8080
+
+Another alternative would be the use of [[http://www.emacswiki.org/emacs/Elnode][elnode]] but it seems to be more
+complex.
+
+
+*** Why html pages are not minified?
+
+HTML compression very tricky. Things can easily go wrong. Using a
+[[http://betterexplained.com/articles/how-to-optimize-your-site-with-gzip-compression/][GZip
+compression]] would be more efficient.
+
+Anyway if you still want to minify your pages, you can have a look to
+[[http://code.google.com/p/htmlcompressor/][htmlcompressor]],
+[[http://developer.yahoo.com/yui/compressor/][yuicompressor]] and
+[[https://developers.google.com/closure/compiler/][Closure compiler]]. You
+can also read Juriy Zaytsev's articles on
+[[http://perfectionkills.com/optimizing-html/][optimizing HTML]] and
+[[http://perfectionkills.com/experimenting-with-html-minifier/][experimenting
+with html minifier]].
+
+So here is the magic! Once your site is generated, you can run the following command:
+
+#+BEGIN_SRC sh
+htmlcompressor --compress-js --compress-css --recursive --mask '*.js;*.html;*.xml;*.css;*.less' -o /path/to/out/ /path/to/out
+#+END_SRC
+
+
+* News
+** DONE The Server must move					     :cl@net:
+   CLOSED: [2013-03-05 Tue 22:03]
+
+ The company which hosts the dedicated server on which common-lisp.net
+ is run is not offering such a service anymore, and the server itself
+ is old and out of date. Because of this, we must migrate a lot to a
+ new service.
+
+ This machine, http://alpha.common-lisp.net/, is running on the new
+ server, so it is simply moving things over. Still, there is a lot, so
+ =if you can help, please leave a comment below= or [[mailto:drewc@drewc.org][email me]].
+
+ There is also the matter of the future itself, what we offer and what
+ we can do to help the lisp community. I was planning on having a bit
+ more thought on this matter before asking others, but since this has
+ come up, I figure that now is a good time to ask for input as well.
+
+ If you happen to be able to [[https://www.paypal.com/xclick/business%3Dtreasurer%2540cl-foundation.org&currency_code%3DEUR&item_name%3DDonation%2520common-lisp%252Enet&lc%3DGB][Donate]] some time, skills or funds, it
+ would really help move things along. If you happen to
+ IRC, #common-lisp.net on freenode is the place. Otherwise, comments
+ and email will be read and dealt with promptly.
+
+** TODO Scripting with SBCL : Unix Admin from command line
+
+For the new =Common Lisp.net=, there is a Single Sign On (SSO)
+involved. This way, the same user id and password can be user for
+multiple boxes as well as the soon-to-come web application. 
+
+What that means is that, for now, Kerberos and LDAP are used where
+=/etc/{passwd,groups,shadow]= was used before.
+
+#+BEGIN_SRC lisp :tangle "../bin/add-kerberos-users"  :shebang "#!/usr/local/bin/sbcl --script"
+    
+    (define-symbol-macro $pwgen "/usr/bin/pwgen")
+    (define-symbol-macro $ls "/bin/ls")
+    (define-symbol-macro $kadmin "/usr/sbin/kadmin.local")
+    (define-symbol-macro $passwd-path #P"/tiger/etc/passwd")
+    
+    (with-open-file (f $passwd-path
+                       :external-format :latin-1)
+     (let (users
+           (this-user (sb-ext:posix-getenv "USER")))
+       (labels ((|go-to-:-#| (string num)
+                 (dotimes (n num)
+                   (setf string (subseq string (1+ (position #\: string)))))
+                 (subseq string 0 (position #\: string)))
+                (prop (alist prop)
+                  (cdr (assoc prop alist)))
+                (uid (alist)
+                  (prop alist :uid))
+                (run (&rest program)
+                  (with-output-to-string (s) 
+                  (sb-ext:run-program (first program) (rest program) 
+                                       :output s))))
+         (loop 
+          (let ((line (read-line f nil :eof)))
+            (if (eq line :eof)
+                (return users)
+                (unless (equal #\# (aref line 1))
+                  (push `((:uid .,(parse-integer (|go-to-:-#| line 2)))
+                        (:gid .,(parse-integer (|go-to-:-#| line 3)))
+                        (:username .,(|go-to-:-#| line 0)))
+                    users))))) 
+         (setf users (sort users #'< :key #'uid))
+         (setf users (nthcdr (position 1000 users :key #'uid) users))        
+         (dolist (u users)
+           (let ((pw (run $pwgen "-ns" "20" "1")))
+            (print (list $kadmin 
+                    "-p" "admin" "-q" 
+                    (format nil "\"add_principal -pw ~A ~A\""
+                     pw  (prop u :username)))))))))
+    ;(with-open-file (f $passwd-path)
+  
+    
+  ;  (print 
+    
+#+END_SRC
+
+
+
+
+** DONE Migration Finished					     :cl@net:
+   CLOSED: [2011-06-05 Sat 21:50]
+
+#+BEGIN_HTML
+      Migration has come to a close. Nearly all services are up and running
+      again, with the exception of Arch and ArchZoom, for which support
+      has been dropped. Here's a list of other changes:</p>
+
+      <ul>
+      <li>WebSVN repository browsing has been replaced:
+        Subversion repository browsing is now handled by ViewVC.
+	<li>The mailing list web interface is now hosted
+	  on <a href="http://lists.common-lisp.net/">lists.common-lisp.net</a>
+	  <li>Subversion anonymous checkout is now also supported over HTTP
+	    through http://svn.common-lisp.net/&lt;project&gt;
+	    <li>Trac has been upgraded to 0.11.7
+	    <li>The standard Subversion post-commit hook integrates
+	      with Trac tickets, if a project also has Trac set up. To
+	        learn more about this integration, read
+		  <a href="http://trac.edgewall.org/browser/tags/trac-0.11.7/contrib/trac-post-commit-hook"
+		       >the within-script documentation from the Trac repository</a>
+		       </ul>
+#+END_HTML
+
+** DONE A new server move 					     :cl@net:
+  CLOSED: [2011-04-02 Sat 21:47]
+
+#+BEGIN_HTML
+      We're moving common-lisp.net to a new server.  In the process, all
+      services will be completely reconfigured from scratch, with each service
+      moving to its own subdomain.  This work is likely to cause service
+      interruptions over the coming weeks.  If you want to offer a helping
+      hand, please join <b>clo-devel at common-lisp.net</b>, where the
+      process is being discussed and coordinated.</p>
+#+END_HTML
+
+** DONE Darcs Web						     :cl@net:
+   CLOSED: [2008-06-08 Sat 21:45]
+
+#+BEGIN_HTML
+      I've updated the scripts that generate the 
+      <a href="http://common-lisp.net/cgi-bin/darcsweb/darcsweb.cgi" 
+      title="Darcs Web">DarcsWeb</a> repository listing. If something
+      seems awry, please send me an <a href="mailto:gwking@metabang.com">e-mail</a>.
+#+END_HTML
+
+
+** DONE New Admins Found!					     :cl@net:
+   CLOSED: [2008-01-08 Sat 21:40]
+
+#+BEGIN_HTML
+      <a href="mailto:drew.crampsie@gmail.com">Drew Crampsie</a> and 
+      <a href="mailto:gwking@metabang.com">Gary King</a>, both members of 
+      the <a href="http://tech.coop/index">Tech Co-op</a>, have volunteered to take care of 
+      the duties required to administer cl.net. We
+      would both like to extend a hearty thanks to Erik Enge for all the
+      hard work over the years.
+#+END_HTML
+** DONE New Administrator wanted				     :cl@net:
+   CLOSED: [2007-09-10 Sat 21:38]
+
+      Due to commitments at work I'm unable to provide adequate support
+      to common-lisp.net.  The result of which is that there are several
+      outstanding project applications (sorry guys, hope to get to them
+      this week) and other misc tasks.  I'm looking for someone to take
+      over the day-to-day administration of common-lisp.net - I'll be
+      happy to keep paying for the site and manage the donations (though
+      equally happy to give that up as well).  Email admin (at) common-lisp.net
+      if you are interested.  The chores involves mostly a couple of shell
+      scripts that take care of adding users and projects.
+** DONE Extended Filesystem					     :cl@net:
+   CLOSED: [2007-03-19 Sat 21:22]
+
+      We extended the filesystem with another 5G last night which resulted
+      in it being left in a read-only state without us noticing right away.
+      Sorry for the inconvenience, all is well now.
+
+** DONE Reboot							     :cl@net:
+   CLOSED: [2006-09-19 Sat 21:21]
+
+      While the hoster was performing a filesystem backup we experienced
+      a failure which eventually led to a reboot.  All should be fine again,
+      apologies for the inconvenience.
+
+** DONE Domain Issues						     :cl@net:
+   CLOSED: [2006-06-29 Sat 21:17]
+
+#+BEGIN_HTML
+      While the domain name was being transferred from the previous owner
+      to myself we ran into some problems.  It's all fixed now but if you're
+      interested in the whole story, <a href="http://groups.google.com/group/comp.lang.lisp/browse_frm/thread/d33c6b578c04a9c2/#">read it here</a>.
+#+END_HTML
+
+** DONE Trac is ready						     :cl@net:
+   CLOSED: [2006-04-07 Sat 21:14]
+
+#+BEGIN_HTML
+      Project administrators may now request Trac for their projects.
+      Read more about <a href="http://common-lisp.net/trac-intro.shtml">how it's
+      configured</a>, <a href="http://www.edgewall.com/trac/">see the official Trac
+      homepage</a> or view projects at common-lisp.net which
+      <a href="http://trac.common-lisp.net/">currently use
+      Trac</a>.
+#+END_HTML
+** DONE Network Outage						     :cl@net:
+   CLOSED: [2006-03-24 Sat 21:12]
+      We had 30 minutes of network outage today from our upstream vendor.  The box
+      stayed running the entire time but please let me know if there were any side-effects
+      from this that I can help with.
+** DONE Move is complete
+   CLOSED: [2006-02-24 Sat 21:12]
+      Move is complete.  FTP will trickle in over the next few days.  Please email
+      me at erik.enge@gmail.com if there any problems.  Thanks.
+** DONE New Server						     :cl@net:
+   CLOSED: [2006-02-22 Sat 21:07]
+
+      Tomorrow, Thursday the 23rd from 6PM EST, common-lisp.net will be unavailable for 24+ hours.
+      We are moving to a new server and a new colocation facility in an effort to
+      deal with our stability issues.  Thanks for your patience and sorry for the
+      inconvenience.  Check here and comp.lang.lisp for updates on when we are back
+      online.
+** DONE More Diskspace						     :cl@net:
+   CLOSED: [2006-02-03 Sat 21:05]
+      We'll have a short period of downtime this Saturday at 8PM EST.
+      The hosting provider will be adding more diskspace to our server
+      as we are currently about to exceed the 20G we were originally
+      given.  We should be back up again by 8:30PM EST.
+** DONE Bad COLO Provider					     :cl@net:
+   CLOSED: [2006-01-28 Sat 21:03]
+
+       It seems that our hosting provider's colo provider is
+       completely incompetent.  We're now on our third downtime in one
+       week and have made the obvious decision to move to another
+       colocation facility.  I'm sorry about all the downtime and
+       inconveniences.  My hosting provider (Tech Co-op) tells me they
+       will try and move us into a new colo some time next week.  In
+       the mean time, I'm terribly sorry to have to provide such an
+       unreliable service and hope the users will bear with us until
+       we have this resolved.
+** DONE Subversion						     :cl@net:
+   CLOSED: [2006-01-26 Sat 21:01]
+#+BEGIN_HTML
+      Thanks to Erik Huelsmann for helping me set up Subversion on common-lisp.net.
+       Now all projects have a default Subversion repository set up in /project/project-name/svn
+       correctly configured to email commits to project-name-cvs@common-lisp.net.  If you want to
+       continue using arch, darcs or CVS, that's fine and if you want to move onto Subversion
+       that should now be very easy to do.  <a href="http://lists.common-lisp.net/mailman/listinfo/clo-devel">Let me know</a>
+       if there are any questions or problems.
+#+END_HTML 
+** DONE server was powercycled					     :cl@net:
+   CLOSED: [2006-01-26 Sat 20:58]
+
+We experienced an hour or so of downtime today, again.  The server was
+powercycled (electrician flipped wrong breaker) and didn't come back
+up correctly because of a corrupted filesystem (well, a small part of
+it; fixed now).
+
+** DONE loginfo for CVS repos					     :cl@net:
+   CLOSED: [2006-01-21 Sat 20:57]
+#+BEGIN_HTML
+
+       Upgraded loginfo for CVS repositories (the "deprecated format strings" warning
+       should now be a thing of the past) though users should see no real changes.
+       <a href="http://lists.common-lisp.net/mailman/listinfo/clo-devel">Let me know</a> if there are any problems.
+#+END_HTML 
+** DONE Overnight Outage					     :cl@net:
+   CLOSED: [2006-01-18 Sat 20:54]
+#+BEGIN_HTML
+       We had a significant outtage over night (2 hours), all is back to normal now.  Read
+       more <a href="http://groups.google.com/group/comp.lang.lisp/browse_frm/thread/c80fba591bbf07f2/4a73973b548a3851#4a73973b548a3851">here</a>.
+#+END_HTML
+** DONE Annoucements Mailing List				     :cl@net:
+   CLOSED: [2006-01-17 Sat 20:52]
+
+#+BEGIN_HTML
+To stay up-to-date with all releases that are announced on the various
+mailinglists you simply need to be subscribed to <a href="http://lists.common-lisp.net/mailman/listinfo/announcements">the
+        announcements mailinglist</a>.
+#+END_HTML
+
+** DONE New Server						     :cl@net:
+   CLOSED: [2006-01-15 Sat 20:47]
+
+#+BEGIN_HTML
+<p>Moved to a new server, read more <a
+href="http://groups.google.com/group/comp.lang.lisp/browse_frm/thread/0e54030c3d148b72/a4a60a97c2d48246#a4a60a97c2d48246">here</a>.
+</p>
+#+END_HTML
+** DONE Donate							     :cl@net:
+   CLOSED: [2006-01-04 Sat 20:43]
+
+#+BEGIN_HTML
+<p>You can now <a href="/contribute.html">donate</a> to help pay for the
+operating costs of common-lisp.net</p>
+#+END_HTML
+
+** DONE Lisp Movies!					    :cl@net:
+   CLOSED: [2005-07-29 Sat 20:34]
+
+#+BEGIN_HTML
+<span style="color:red">Lisp Movies!</span> 
+
+   New cool movies
+       featuring the Lisp Experience. One on the acclaimed <a
+       href="/project/slime">slime</a> IDE, and
+       one on the also acclaimed <a
+       href="/project/ucw/">UnCommon Web</a>
+       framework. A 100% legal and downloadable for free!
+       <ul>
+       <li><a
+       href="/torrents/slime.torrent">Slime
+       movie</a></li>
+       <li><a
+       href="/torrents/hello-world.torrent">UnCommon Web
+       movie</a></li>
+       </ul>
+       <b>WARNING:</b> you might <i>really</i> like what you see ;-).
+#+END_HTML
+* Alpha 
+** DONE CUT: srfi/26 for CL		      :emacs:common@lisp:scheme:lisp:
+   CLOSED: [2013-02-17 Sun 16:09]
+
+#+BEGIN_SRC rcirc
+ ** drewc JOIN #emacs
+ <ijp> nicferrier: cut is a macro so that you can do e.g. (cut
+             + foo bar <> baz <>) instead of (lambda (x y) (+ foo
+             bar x baz y))
+ 15:33 <ijp> rudybot: (require srfi/26)
+ 15:33 <rudybot> ijp: Done.
+ 15:33 <ijp> rudybot: ((cut list 'foo <> 'baz) 'bar)
+ 15:33 <rudybot> ijp: ; Value:  (foo bar baz)
+#+END_SRC
+
+#+BEGIN_SRC lisp 
+  
+  (defun map-cut (fn &rest args &aux arg-list)
+    (let* ((body (mapcar (lambda (arg) (case arg
+                                         (<> (let ((sym (gensym)))
+                                               (push sym arg-list)
+                                               sym))
+                                         (otherwise arg))) 
+                         args))
+           (fn-form (nconc (etypecase fn 
+                             (symbol (list fn))
+                             (function `(funcall ,fn)))
+                           body)))
+      `(lambda ,(nreverse arg-list) ,fn-form)))
+         
+  (defmacro cut (function-name &rest args-or-<>)
+    `(apply #'map-cut ',function-name (quote ,args-or-<>)))
+  
+  
+  ;; CL-USER> (#.(cut list 1 2 <> 4 <>) 3 "t")
+  ;; (1 2 3 4 "t")
+  ;; CL-USER> (apply #'map-cut '(list 1 2 <> 4 <>))
+  ;; (LAMBDA (#:G925 #:G926) (LIST 1 2 #:G925 4 #:G926))
+  #+END_SRC
+** DONE New alpha.common-lisp.net				    :common@lisp:
+   CLOSED: [2013-02-13 Wed 12:57]
+
+ So, this is really all about the alpha site, which will become beta and eventually gamma.
+
+
+ This is also the first test of the alpha blog. It will also have the 'production' blog as well.
+
+** DONE Hello #emacs!						:emacs:elisp:
+   CLOSED: [2013-02-14 Thu 16:20]
+
+org-mode, this entire site!. yay!

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="<lisp>(ob:blog-language BLOG)</lisp>">
+  <head>
+    <meta charset="utf-8"/>
+    <title>
+     <lisp>(if (boundp 'POST) (ob:post-title POST) (ob:blog-title BLOG)) </lisp>
+    </title>
+    <link rel="stylesheet" type="text/css" href="<lisp>(ob:path-to-root)</lisp>/style/bootstrap/css/bootstrap.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="generator" content="<lisp>(o-blog-version)</lisp>"/>
+    <lisp>(when (boundp 'org-export-xhtml-scripts) org-export-xhtml-scripts)</lisp>
+    <style type="text/css">
+
+#footer {
+background-color: #171717;
+background-image: -webkit-linear-gradient(top, #262626, black);
+background-repeat: repeat-x;
+color: #505050;
+display: block;
+font-family: Andika, 'Helvetica Neue', Helvetica, Arial, sans-serif;; }
+
+#footer h1 {
+color: #025577;
+}
+
+#footer h1 a {
+color: #025577;
+}
+
+#footer nav.tags ul li {
+display: inline;
+}
+
+#footer a {
+ color: #7B7B7B;
+cursor: auto;
+display: inline;
+font-family: Andika, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+text-size:large;
+height: auto;
+list-style-type: none;
+text-align: left;
+text-decoration: none;
+width: auto; }
+    </style>
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top">
+
+      <div class="navbar-inner">
+      <div class="container">
+	<a class="brand" 
+	   href="<lisp>(ob:path-to-root)</lisp>/index.html">
+	 <lisp>(ob:blog-title BLOG)</lisp>
+        </a>
+	<lisp>
+	  (drewc.org:replace-<i>-icons  
+           (replace-regexp-in-string (rx "<ul>") 
+            "<ul class=\"nav\">" 
+            (ob:post-content-html (ob:get-snippet "Navigation"))))
+        </lisp>
+	
+      </div>
+      </div>
+    </div>
+    <div class="subnav subnav-fixed visible-desktop">
+      <div class="container">
+       <lisp>(ob:insert-template "nav_breadcrumb.html")</lisp>
+      </div>
+    </div>
+    <div id="page" class="container">
