@@ -316,7 +316,7 @@ Trac @ clnet introduction
   :END:
 
 The simplest way is to [[https://www.paypal.com/xclick/business%3Dtreasurer%2540cl-foundation.org&currency_code%3DEUR&item_name%3DDonation%2520common-lisp%252Enet&lc%3DGB][donate]] funds(/icon-shopping-cart/). Currently this
-is handled by [[http://www.cl-foundation.org/][Common Lisp Foundation]] via Paypal. If you need another
+is handled by the [[http://www.cl-foundation.org/][Common Lisp Foundation]] via Paypal. If you need another
 way to donate, [[mailto:drewc@drewc.org][email me]], or leave a comment below.
 
 There is also the contribution of time(/icon-time/). This can be
